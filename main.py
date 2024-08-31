@@ -1,82 +1,91 @@
+import time
+
 training_data = [
     [23, 4, 'ring'],
     [18, 3, 'ring'],
     [8, 2, 'ring'],
-    [200, 300, 'ring'],
+    [200, 30, 'ring'],
     [8, 150, 'pen'],
     [30, 350, 'pen'],
     [5, 100, 'pen'],
     [10, 200, 'pen']
 ]
 
+# input_a = training_data[0][0]  # diameter
+# input_b = training_data[0][1]  # length
+# name = training_data[0][2]
 
-input_a = 23 # diameter
-input_b = 4 # length
-name = "ring"
-good = False
 weight_a = -2
-weight_b = 1/10
+weight_b = 1 / 10
 constant_speed = 0.2
-
-output_a = input_a * weight_a
-output_b = input_b * weight_b
-
 addition = 6
 
-summed_output = output_a + output_b + addition
+everyGood = True
+i = 0
+while everyGood == False or i == 0:
+    everyGood = True
 
-# interpretation
-if summed_output >= 0:
-    print("ring")
-    if name == "ring":
-        good = True
-    else:
-        good = False
-else:
-    print("pen")
-    if name == "pen":
-        good = True
-    else:
-        good = False
+    print()
+    print('weight a: ', weight_a)
+    print('weight b: ', weight_b)
+    print()
 
-print(name, good)
+    for data in training_data:
 
-if not good:
-    if name == "ring":
-        add = 1
-    else:
-        add = -1
+        input_a = data[0]  # diameter
+        input_b = data[1]  # length
+        name = data[2]
 
-    print(weight_a, add, input_a, constant_speed)
+        output_a = input_a * weight_a
+        output_b = input_b * weight_b
 
-    weight_a += add * input_a * constant_speed
-    weight_b += add * input_b * constant_speed
+        summed_output = output_a + output_b + addition
 
-    addition += add * constant_speed
+        # interpretation
+        if summed_output >= 0:
+            if name == "ring":
+                if len(data) == 3:
+                    data.append(True)
+                else:
+                    data[3] = True
 
-    print(weight_a)
-    print(weight_b)
-    print(addition)
-
-    output_a = input_a * weight_a
-    output_b = input_b * weight_b
-
-    addition = 6
-
-    summed_output = output_a + output_b + addition
-
-    # interpretation
-    if summed_output >= 0:
-        print("ring")
-        if name == "ring":
-            good = True
+            else:
+                if len(data) == 3:
+                    data.append(False)
+                else:
+                    data[3] = False
+                everyGood = False
         else:
-            good = False
-    else:
-        print("pen")
-        if name == "pen":
-            good = True
-        else:
-            good = False
+            if name == "pen":
+                if len(data) == 3:
+                    data.append(True)
+                else:
+                    data[3] = True
+            else:
+                if len(data) == 3:
+                    data.append(False)
+                else:
+                    data[3] = False
+                everyGood = False
+        print(data)
 
-    print(name, good)
+
+    for data in training_data:
+        if not data[3]:
+            if data[2] == 'ring':
+                add = 1
+            else:
+                add = -1
+
+            weight_a += add * data[0] * constant_speed
+            weight_b += add * data[1] * constant_speed
+
+            addition += add * constant_speed
+
+
+
+            break
+
+
+    time.sleep(1)
+    i+=1
